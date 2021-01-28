@@ -1,0 +1,55 @@
+* {
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}
+
+button:focus {
+  outline: 0;
+}
+
+body {
+  font-family: Helvetica;
+  width: 100vw;
+  height: 100vh;
+  background: #1C1C1C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+body #container {
+  display: grid;
+  grid-auto-flow: column;
+}
+body #container .item {
+  background: white;
+  height: 50vh;
+  width: 0vw;
+  margin-right: -1vw;
+}
+body canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+/*# sourceMappingURL=/style.e0c02e61.css.map */

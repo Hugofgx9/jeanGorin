@@ -1,0 +1,18 @@
+@import 'init.scss';
+@import 'font.scss';
+
+body{
+	font-family: Helvetica;
+	width: 100vw;
+	height: 100vh;
+	background: #1C1C1C;
+	position: relative;
+
+	canvas {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+	}
+}
