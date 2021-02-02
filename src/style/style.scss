@@ -1,11 +1,11 @@
 @import 'init.scss';
 @import 'font.scss';
 
-body{
+body {
 	font-family: Helvetica;
 	width: 100vw;
 	height: 100vh;
-	background: #1C1C1C;
+	background: #1c1c1c;
 	position: relative;
 
 	canvas {
@@ -14,5 +14,19 @@ body{
 		left: 0;
 		width: 100vw;
 		height: 100vh;
+	}
+
+	.subtitle-container {
+		position: absolute;
+		width: 100vw;
+		bottom: 5vh;
+		font-size: 1.3vw;
+		display: block;
+		z-index: 1;
+		color: white;
+
+		p {
+			text-align: center;
+		}
 	}
 }
