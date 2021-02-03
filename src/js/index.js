@@ -2,9 +2,15 @@ import gsap from 'gsap';
 import Scene from './scene';
 import Audio from './audio';
 import LevelController from './levelController';
+import ScrollLoader from './loader';
 
 let audioController = new Audio();
 let scene = new Scene({ audio: audioController });
+
+
+
+
+//new ScrollLoader;
 
 
 
