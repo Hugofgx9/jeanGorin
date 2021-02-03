@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {gsap, Power3} from 'gsap';
+import gsap from 'gsap';
 
 let positions = [
 	{ x: 100, y: 200, z: 400 },
@@ -28,7 +28,7 @@ export default class CameraController {
 		let y = 2 * (mouse.x / window.innerHeight) - 1;
 		let x = 2 * (mouse.y / window.innerWidth) - 1;
 		let amount = 0.08;
-		gsap.set(this.camera.rotation, {
+		gsap.to(this.camera.rotation, 1, {
 			x: this.baseRotation.x + x * amount,
 			y: this.baseRotation.y - y * amount,
 		});

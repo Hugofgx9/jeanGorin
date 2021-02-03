@@ -1,18 +1,19 @@
 import {Howl, Howler} from 'howler';
-
-import mp3 from '../audio/voice/1_bienvenue.mp3';
-import vtt from './../vtt/1 - bienvenue.vtt';
 import makeNode from './utils/makeNode';
+import music from '~/js/store/music';
+import voiceStore from '~/js/store/voice';
 
 export default class AudioController {
 	constructor() {
-		this.play2();
+		this.play(voiceStore.intro.audio, voiceStore.intro.vtt);
+		this.playMusic();
+
 	}
 
-	play() {
+	play(audio, vtt) {
 		let subtitleContainer = document.querySelector('.subtitle-container p');
 
-		let sound = new Audio(mp3);
+		let sound = new Audio(audio);
 		let track = makeNode([
 			'track',
 			{ src: vtt, kind: 'subtitles', srclang: 'fr', default: 'default' },
@@ -32,11 +33,13 @@ export default class AudioController {
 		};
 	}
 
-	play2() {
+	playMusic() {
 		let subtitleContainer = document.querySelector('.subtitle-container p');
 		
 		const sound = new Howl({
-		  src: [mp3],
+		  src: [music.piano],
+	    loop: true,
+  		volume: 0.5,
 		});
 
 		console.log(sound);
