@@ -1,18 +1,20 @@
-import {Howl, Howler} from 'howler';
+import { Howl, Howler } from 'howler';
 import makeNode from './utils/makeNode';
 import music from '~/js/store/music';
 import voiceStore from '~/js/store/voice';
 
 export default class AudioController {
-	constructor() {
-		this.play(voiceStore.intro.audio, voiceStore.intro.vtt);
-		this.playMusic();
+	constructor() {}
 
-	}
+	playVocal(index) {
+		this.stopVocal();
 
-	play(audio, vtt) {
+		let audio = voiceStore.intro.audio,
+			vtt = voiceStore.intro.vtt;
+
 		let subtitleContainer = document.querySelector('.subtitle-container p');
 
+		//create audio and subtitle element
 		let sound = new Audio(audio);
 		let track = makeNode([
 			'track',
@@ -21,10 +23,10 @@ export default class AudioController {
 		sound.appendChild(track);
 
 		sound.play();
+		this.currentVocal = sound;
 
 		//track handler
 		track.oncuechange = (event) => {
-			console.log(track.track);
 			if (track.track.activeCues[0]) {
 				subtitleContainer.textContent = track.track.activeCues[0].text;
 			} else {
@@ -34,17 +36,30 @@ export default class AudioController {
 	}
 
 	playMusic() {
+		this.stopMusic();
+
 		let subtitleContainer = document.querySelector('.subtitle-container p');
-		
+
 		const sound = new Howl({
-		  src: [music.piano],
-	    loop: true,
-  		volume: 0.5,
+			src: [music.piano],
+			loop: true,
+			volume: 0.5,
 		});
-
-		console.log(sound);
-
 		// Play the sound.
 		sound.play();
+		this.currentMusic = sound;
+	}
+
+	stopVocal() {
+		if (this.currentVocal) {
+			this.currentVocal.pause();
+			this.currentVocal.currentTime = 0;
+		}
+	}
+
+	stopMusic() {
+		if (this.currentMusic) {
+			this.currentMusic.stop();
+		}
 	}
 }
