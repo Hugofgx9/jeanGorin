@@ -5,8 +5,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import model from '../model/GORIN_GLTF_COLOR_BAKED.gltf';
 
 export default class Model {
-	constructor(scene, sceneCtxt) {
-		this.sceneCtxt = sceneCtxt;
+	constructor(scene, sceneCtx) {
+		this.sceneCtx = sceneCtx;
 		this.scene = scene;
 
 		this.loadModel();
@@ -20,7 +20,10 @@ export default class Model {
 			(gltf) => {
 				this.model = gltf.scene;
 				this.scene.add(this.model);
-				console.log(this.model);
+
+
+
+				let modelCam = this.model.getObjectByName('CAM_FLAT', true);
 
 				this.model.scale.x = this.model.scale.y = this.model.scale.z = 0.1;
 
