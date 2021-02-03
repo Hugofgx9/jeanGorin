@@ -1,0 +1,26 @@
+[
+	{"camera": 
+		{"position": 
+			{ "x": 100, "y": 200, "z": 400 }
+		},
+		"vocal": "1.introduction",
+	},
+	{"camera": 
+		{"position": 
+			{ "x": -200, "y": 200, "z": 400 }
+		},
+		"vocal": "2.formes",
+	},
+	{"camera": 
+		{"position": 
+			{ "x": 200, "y": 200, "z": 200 }
+		},
+		"vocal": "3.couleurs",
+	},
+	{"camera": 
+		{"position": 
+			{ "x": 300, "y": 100, "z": 0 }
+		},
+		"vocal": "4.abstractions",
+	}
+]

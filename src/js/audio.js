@@ -4,13 +4,14 @@ import music from '~/js/store/music';
 import voiceStore from '~/js/store/voice';
 
 export default class AudioController {
-	constructor() {}
+	constructor() {
+	}
 
-	playVocal(index) {
+	playVocal(key) {
 		this.stopVocal();
 
-		let audio = voiceStore.intro.audio,
-			vtt = voiceStore.intro.vtt;
+		let audio = voiceStore[ key ].mp3;
+		let vtt = voiceStore[ key ].vtt;
 
 		let subtitleContainer = document.querySelector('.subtitle-container p');
 
@@ -23,6 +24,7 @@ export default class AudioController {
 		sound.appendChild(track);
 
 		sound.play();
+		console.log(audio, 'playing');
 		this.currentVocal = sound;
 
 		//track handler

@@ -8,25 +8,49 @@ body {
 	background: #1c1c1c;
 	position: relative;
 
-	canvas {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
+}
+
+canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+.subtitle-container {
+	position: absolute;
+	width: 100vw;
+	bottom: 5vh;
+	font-size: 1.3vw;
+	display: block;
+	z-index: 1;
+	color: white;
+
+	p {
+		text-align: center;
 	}
+}
 
-	.subtitle-container {
-		position: absolute;
-		width: 100vw;
-		bottom: 5vh;
-		font-size: 1.3vw;
-		display: block;
-		z-index: 1;
-		color: white;
+.loader {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-		p {
-			text-align: center;
+	button {
+		font-size: 20px;
+		border: 2px solid black;
+		padding: 1em;
+		cursor: pointer;
+
+		&:hover {
+			background-color: rgb(200,200,200);
 		}
 	}
 }
