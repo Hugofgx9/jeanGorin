@@ -41,11 +41,10 @@ export default class Scene {
 
 		//this.initLights();
 		this.initCamera();
-		this.model = new Model(this.scene, this);
-		this.bindEvents();
 		//this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-		this.update();
+		this.model = new Model(this.scene, this);
 		this.interaction();
+		this.update();
 	}
 
 	initLights() {
@@ -61,6 +60,10 @@ export default class Scene {
 		this.scene.add( light1 );
 		this.scene.add( light2 );
 */
+	}
+
+	start() {
+		this.bindEvents();
 	}
 
 	initCamera() {

@@ -6,33 +6,36 @@ import voiceStore from '~/js/store/voice';
 export default class AudioController {
 	constructor() {}
 
-	playVocal(index) {
+	playVocal(key) {
 		this.stopVocal();
 
-		let audio = voiceStore.intro.audio,
-			vtt = voiceStore.intro.vtt;
+		if (voiceStore[key]) {
+			let audio = voiceStore[key].mp3;
+			let vtt = voiceStore[key].vtt;
 
-		let subtitleContainer = document.querySelector('.subtitle-container p');
+			let subtitleContainer = document.querySelector('.subtitle-container p');
 
-		//create audio and subtitle element
-		let sound = new Audio(audio);
-		let track = makeNode([
-			'track',
-			{ src: vtt, kind: 'subtitles', srclang: 'fr', default: 'default' },
-		]);
-		sound.appendChild(track);
+			//create audio and subtitle element
+			let sound = new Audio(audio);
+			let track = makeNode([
+				'track',
+				{ src: vtt, kind: 'subtitles', srclang: 'fr', default: 'default' },
+			]);
+			sound.appendChild(track);
 
-		sound.play();
-		this.currentVocal = sound;
+			sound.play();
+			//console.log(audio, 'playing');
+			this.currentVocal = sound;
 
-		//track handler
-		track.oncuechange = (event) => {
-			if (track.track.activeCues[0]) {
-				subtitleContainer.textContent = track.track.activeCues[0].text;
-			} else {
-				subtitleContainer.textContent = '';
-			}
-		};
+			//track handler
+			track.oncuechange = (event) => {
+				if (track.track.activeCues[0]) {
+					subtitleContainer.textContent = track.track.activeCues[0].text;
+				} else {
+					subtitleContainer.textContent = '';
+				}
+			};
+		}
 	}
 
 	playMusic() {

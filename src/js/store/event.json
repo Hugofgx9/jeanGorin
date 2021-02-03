@@ -1,0 +1,27 @@
+[
+	{
+		"camera": { "position": { "x": 0, "y": 47, "z": -50 } },
+		"vocal": "1.introduction",
+		"colorAmount": { "r": 0, "g": 0, "b": 0 }
+	},
+	{
+		"camera": { "position": { "x": -120, "y": 47, "z": -150} },
+		"vocal": "2.formes",
+		"colorAmount": { "r": 1, "v": 0, "b": 0 }
+	},
+	{
+		"camera": { "position": { "x": 100, "y": 47, "z": -140 } },
+		"vocal": "3.couleurs",
+		"colorAmount": { "r": 1, "g": 0, "b": 1 }
+	},
+	{
+		"camera": { "position": { "x": 50, "y": 47, "z": 80 } },
+		"vocal": "4.abstractions",
+		"colorAmount": { "r": 1, "g": 1, "b": 1 }
+	},
+	{
+		"camera": { "position": { "x": 0, "y": 47, "z": -226 } },
+		"vocal": "1.abstractions",
+		"colorAmount": { "r": 1, "g": 1, "b": 1 }
+	}
+]

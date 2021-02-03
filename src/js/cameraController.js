@@ -1,15 +1,10 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
-
-let positions = [
-	{ x: 100, y: 200, z: 400 },
-	{ x: -200, y: 200, z: 400 },
-	{ x: 200, y: 200, z: 200 },
-	{ x: 300, y: 100, z: 0 },
-];
+import events from '~/js/store/event.json';
 
 export default class CameraController {
-	constructor(camera) {
+	constructor(camera, sceneCtx) {
+		this.sceneCtx = sceneCtx;
 		this.camera = camera;
 		this.currentCamPos = 0;
 		this.baseRotation = new THREE.Vector3();
@@ -22,7 +17,7 @@ export default class CameraController {
 			this.baseRotation.y,
 			this.baseRotation.z
 		);
-		this.camera.position.set(0, 400, -2000);
+		this.camera.position.set(0, 47, -226);
 	}
 
 	rotate(mouse) {
@@ -36,30 +31,22 @@ export default class CameraController {
 	}
 
 	nextPosition() {
-		if ([0, 1, 2, 3].includes(this.currentCamPos)) {
+		if (this.currentCamPos < events.length) {
 			let i = this.currentCamPos;
+			let targetPosition = events[i].camera.position;
+			let vocalKey = events[i].vocal;
+			let colorAmount = events[i].colorAmount;
+
 			gsap.to(this.camera.position, 2, {
-				x: positions[i].x,
-				y: positions[i].y,
-				z: positions[i].z,
-				onComplete: () => (this.currentCamPos = i + 1),
+				x: targetPosition.x,
+				y: targetPosition.y,
+				z: targetPosition.z,
+				onComplete: () => {
+					this.sceneCtx.options.audio.playVocal(vocalKey);
+					this.sceneCtx.model.setColorAmount(colorAmount);
+					this.currentCamPos = i + 1;
+				},
 			});
 		}
-
-		// if (this.currentCamPos === 0) {
-		// 	gsap.to(this.camera.position, 2, {
-		// 		x: 100,
-		// 		y: 200,
-		// 		z: 400,
-		// 		onComplete: () => (this.currentCamPos = 1),
-		// 	});
-		// } else if (this.currentCamPos === 1) {
-		// 	gsap.to(this.camera.position, 2, {
-		// 		x: -200,
-		// 		y: 200,
-		// 		z: 400,
-		// 		onComplete: () => (this.currentCamPos = 2),
-		// 	});
-		// }
 	}
 }
