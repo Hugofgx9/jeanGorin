@@ -103,8 +103,6 @@ export default class Scene {
 			x: event.clientX,
 			y: event.clientY,
 			ease: 'linear.none',
-			//x: ( event.clientX / window.innerWidth ) * 2 - 1,
-			//y: ( event.clientY / window.innerHeight ) * 2 + 1,
 			onUpdate: () => this.cameraController.rotate(this.mouse),
 		});
 
