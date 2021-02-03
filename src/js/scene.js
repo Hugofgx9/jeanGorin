@@ -27,8 +27,8 @@ export default class Scene {
 
 		this.stats = new Stats();
 
-		this.stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-		document.body.appendChild( this.stats.dom );
+		this.stats.showPanel(1); // 0: fps, 1: ms, 2: mb, 3+: custom
+		document.body.appendChild(this.stats.dom);
 
 		//document.body.appendChild ( this.renderer.domElement );
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -105,7 +105,6 @@ export default class Scene {
 			ease: 'linear.none',
 			onUpdate: () => this.cameraController.rotate(this.mouse),
 		});
-
 	}
 
 	update() {

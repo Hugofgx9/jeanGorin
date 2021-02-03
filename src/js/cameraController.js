@@ -9,20 +9,21 @@ let positions = [
 ];
 
 export default class CameraController {
-	constructor( camera ) {
-		
+	constructor(camera) {
 		this.camera = camera;
 		this.currentCamPos = 0;
 		this.baseRotation = new THREE.Vector3();
 	}
 
 	initPos() {
-
-		this.baseRotation.set( 0, Math.PI, 0);
-		this.camera.rotation.set( this.baseRotation.x, this.baseRotation.y, this.baseRotation.z );
-		this.camera.position.set( 0, 400, -2000 );
-
-	};
+		this.baseRotation.set(0, Math.PI, 0);
+		this.camera.rotation.set(
+			this.baseRotation.x,
+			this.baseRotation.y,
+			this.baseRotation.z
+		);
+		this.camera.position.set(0, 400, -2000);
+	}
 
 	rotate(mouse) {
 		let y = 2 * (mouse.x / window.innerHeight) - 1;
@@ -41,7 +42,7 @@ export default class CameraController {
 				x: positions[i].x,
 				y: positions[i].y,
 				z: positions[i].z,
-				onComplete: () => this.currentCamPos = i + 1,
+				onComplete: () => (this.currentCamPos = i + 1),
 			});
 		}
 
