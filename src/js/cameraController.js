@@ -1,4 +1,5 @@
-import gsap from 'gsap';
+import * as THREE from 'three';
+import {gsap, Power3} from 'gsap';
 
 let positions = [
 	{ x: 100, y: 200, z: 400 },
@@ -8,18 +9,28 @@ let positions = [
 ];
 
 export default class CameraController {
-	constructor(camera) {
+	constructor( camera ) {
+		
 		this.camera = camera;
 		this.currentCamPos = 0;
+		this.baseRotation = new THREE.Vector3();
 	}
+
+	initPos() {
+
+		this.baseRotation.set( 0, Math.PI, 0);
+		this.camera.rotation.set( this.baseRotation.x, this.baseRotation.y, this.baseRotation.z );
+		this.camera.position.set( 0, 400, -2000 );
+
+	};
 
 	rotate(mouse) {
 		let y = 2 * (mouse.x / window.innerHeight) - 1;
 		let x = 2 * (mouse.y / window.innerWidth) - 1;
 		let amount = 0.08;
-		gsap.to(this.camera.rotation, 1, {
-			x: y * amount,
-			y: x * amount,
+		gsap.set(this.camera.rotation, {
+			x: this.baseRotation.x + x * amount,
+			y: this.baseRotation.y - y * amount,
 		});
 	}
 
@@ -30,6 +41,7 @@ export default class CameraController {
 				x: positions[i].x,
 				y: positions[i].y,
 				z: positions[i].z,
+				onComplete: () => this.currentCamPos = i + 1,
 			});
 		}
 

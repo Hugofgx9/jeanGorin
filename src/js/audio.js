@@ -1,10 +1,12 @@
-import mp3 from '../audio/Bienvenue_01.mp3';
-import vtt from '../vtt/bienvenue.vtt';
+import {Howl, Howler} from 'howler';
+
+import mp3 from '../audio/voice/1_bienvenue.mp3';
+import vtt from './../vtt/1 - bienvenue.vtt';
 import makeNode from './utils/makeNode';
 
 export default class AudioController {
 	constructor() {
-		this.play();
+		this.play2();
 	}
 
 	play() {
@@ -28,5 +30,18 @@ export default class AudioController {
 				subtitleContainer.textContent = '';
 			}
 		};
+	}
+
+	play2() {
+		let subtitleContainer = document.querySelector('.subtitle-container p');
+		
+		const sound = new Howl({
+		  src: [mp3],
+		});
+
+		console.log(sound);
+
+		// Play the sound.
+		sound.play();
 	}
 }

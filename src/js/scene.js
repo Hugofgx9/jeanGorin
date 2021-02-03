@@ -6,6 +6,7 @@ import CameraController from './cameraController';
 import Model from './model';
 import vertexShader from '../glsl/vShader.glsl';
 import fragmentShader from '../glsl/fShader.glsl';
+import Stats from 'stats.js';
 
 export default class Scene {
 	constructor(opts = {}) {
@@ -23,6 +24,12 @@ export default class Scene {
 			antialias: true,
 			alpha: true,
 		});
+
+		this.stats = new Stats();
+
+		this.stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+		document.body.appendChild( this.stats.dom );
+
 		//document.body.appendChild ( this.renderer.domElement );
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -32,11 +39,11 @@ export default class Scene {
 		this.mouse = new THREE.Vector2(0, 0);
 		this.clock = new THREE.Clock();
 
-		this.initLights();
+		//this.initLights();
 		this.initCamera();
 		this.model = new Model(this.scene, this);
 		this.bindEvents();
-		this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+		//this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 		this.update();
 		this.interaction();
 	}
@@ -64,7 +71,9 @@ export default class Scene {
 			1000000
 		);
 		this.camera.position.set(0, 0, this.perspective);
-		this.cameraController = new CameraController(this.camera);
+		this.camera.rotation.set(0, 0, 0);
+		this.cameraController = new CameraController(this.camera, this);
+		this.cameraController.initPos();
 	}
 
 	centerObject(object) {
@@ -90,23 +99,24 @@ export default class Scene {
 	}
 
 	onMouseMove(event) {
-		gsap.to(this.mouse, 0.5, {
+		gsap.to(this.mouse, 0.1, {
 			x: event.clientX,
 			y: event.clientY,
+			ease: 'linear.none',
 			//x: ( event.clientX / window.innerWidth ) * 2 - 1,
 			//y: ( event.clientY / window.innerHeight ) * 2 + 1,
 		});
-		this.cameraController.rotate(this.mouse);
 	}
 
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
-		//this.stats.begin();
-		this.controls.update();
+		this.cameraController.rotate(this.mouse);
+		this.stats.begin();
+		//this.controls.update();
 
 		this.renderer.render(this.scene, this.camera);
-		//this.stats.end();
+		this.stats.end();
 	}
 
 	bindEvents() {
@@ -124,8 +134,8 @@ export default class Scene {
 	}
 
 	clickHandle() {
-		//this.cameraController.nextPosition();
-		console.log('click');
+		this.cameraController.nextPosition();
+		//console.log('click');
 	}
 
 	interaction() {
