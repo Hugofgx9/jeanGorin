@@ -6,6 +6,11 @@ import LevelController from './levelController';
 let audioController = new Audio();
 let scene = new Scene({ audio: audioController });
 
+
+
+
+
+//loader
 document.querySelector('.loader button').addEventListener('click', () => {
 	hideLoader( afterHide );
 
@@ -13,7 +18,6 @@ document.querySelector('.loader button').addEventListener('click', () => {
 		document.querySelector('.loader').remove();
 		scene.start();
 		audioController.playMusic();
-		//audioController.playVocal();
 	};
 })
 

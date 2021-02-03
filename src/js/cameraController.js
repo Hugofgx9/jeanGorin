@@ -17,7 +17,7 @@ export default class CameraController {
 			this.baseRotation.y,
 			this.baseRotation.z
 		);
-		this.camera.position.set(0, 400, -2000);
+		this.camera.position.set(0, 47, -226);
 	}
 
 	rotate(mouse) {
@@ -31,20 +31,19 @@ export default class CameraController {
 	}
 
 	nextPosition() {
-		if ( this.currentCamPos < events.length ) {
-
+		if (this.currentCamPos < events.length) {
 			let i = this.currentCamPos;
 			let targetPosition = events[i].camera.position;
 			let vocalKey = events[i].vocal;
-			console.log(vocalKey);
-
+			let colorAmount = events[i].colorAmount;
 
 			gsap.to(this.camera.position, 2, {
 				x: targetPosition.x,
 				y: targetPosition.y,
 				z: targetPosition.z,
 				onComplete: () => {
-					this.sceneCtx.options.audio.playVocal( vocalKey );
+					this.sceneCtx.options.audio.playVocal(vocalKey);
+					this.sceneCtx.model.setColorAmount(colorAmount);
 					this.currentCamPos = i + 1;
 				},
 			});
