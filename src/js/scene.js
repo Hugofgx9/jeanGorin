@@ -44,6 +44,7 @@ export default class Scene {
 		//this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 		this.model = new Model(this.scene, this);
 		this.interaction();
+
 		this.update();
 	}
 
@@ -73,10 +74,11 @@ export default class Scene {
 			1,
 			1000000
 		);
-		this.camera.position.set(0, 0, this.perspective);
+		this.camera.position.set(0, 0, 0);
 		this.camera.rotation.set(0, 0, 0);
 		this.cameraController = new CameraController(this.camera, this);
 		this.cameraController.initPos();
+		console.log(this.camera);
 	}
 
 	centerObject(object) {
@@ -112,6 +114,9 @@ export default class Scene {
 
 	update() {
 		requestAnimationFrame(this.update.bind(this));
+
+
+		this.cameraController.cameraContainer.lookAt( 10, 40, 100 );
 
 		this.stats.begin();
 		//this.controls.update();

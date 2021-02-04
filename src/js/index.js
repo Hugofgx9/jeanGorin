@@ -8,7 +8,6 @@ let audioController = new Audio();
 let scene = new Scene({ audio: audioController });
 
 audioController.on('vocalComplete', () => {
-	console.log('canNext');
 	canNext();
 });
 
@@ -17,17 +16,16 @@ btn.addEventListener('click', () => btnHandle() );
 
 function canNext () {
 	btn.style.display = 'block';
+		document.body.style.cursor = 'default';
+
 }
 
 
 function btnHandle() {
 		scene.nextSeq();
 		btn.style.display = 'none';
+		document.body.style.cursor = 'none';
 }
-
-
-
-
 
 //loader
 document.querySelector('.loader button').addEventListener('click', () => {
@@ -36,6 +34,7 @@ document.querySelector('.loader button').addEventListener('click', () => {
 	function afterHide() {
 		document.querySelector('.loader').remove();
 		scene.start();
+		document.body.style.cursor = 'none';
 		audioController.playMusic();
 		audioController.playVocal('1.introduction');
 	};
