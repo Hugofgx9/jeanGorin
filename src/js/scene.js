@@ -134,8 +134,11 @@ export default class Scene {
 		}
 	}
 
-	clickHandle() {
+	nextSeq(){
 		this.cameraController.nextPosition();
+	}
+
+	clickHandle() {
 		//console.log('click');
 	}
 

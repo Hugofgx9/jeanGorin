@@ -5,7 +5,7 @@
 		"colorAmount": { "r": 0, "g": 0, "b": 0 }
 	},
 	{
-		"camera": { "position": { "x": -120, "y": 47, "z": -150} },
+		"camera": { "position": { "x": -120, "y": 120, "z": -150} },
 		"vocal": "2.formes",
 		"colorAmount": { "r": 1, "v": 0, "b": 0 }
 	},

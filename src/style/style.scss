@@ -5,32 +5,59 @@ body {
 	font-family: Helvetica;
 	width: 100vw;
 	height: 100vh;
+	overflow: hidden;
 	background: #1c1c1c;
 	position: relative;
 
 }
 
-canvas {
-	position: absolute;
-	top: 0;
-	left: 0;
+.scene {
 	width: 100vw;
 	height: 100vh;
-}
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	canvas {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+	}
 
-.subtitle-container {
-	position: absolute;
-	width: 100vw;
-	bottom: 5vh;
-	font-size: 1.3vw;
-	display: block;
-	z-index: 1;
-	color: white;
+	.subtitle-container {
+		position: absolute;
+		width: 100vw;
+		bottom: 5vh;
+		font-size: 1.3vw;
+		display: block;
+		z-index: 1;
+		color: white;
 
-	p {
-		text-align: center;
+		p {
+			text-align: center;
+		}
+	}
+
+	.next-btn {
+		display: none;
+		$color: white;
+		font-size: 20px;
+		border: 2px solid $color;
+		color: $color;
+		padding: 1em;
+		cursor: pointer;
+		z-index: 1;
+		background-color: black;
+		position: relative;
+
+			&:hover {
+				background-color: rgb(200,200,200);
+			}
 	}
 }
+
 
 .loader {
 	position: absolute;
@@ -42,6 +69,10 @@ canvas {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	img {
+		width: 20vw;
+	}
 
 	button {
 		font-size: 20px;
