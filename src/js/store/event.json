@@ -16,12 +16,17 @@
 	},
 	{
 		"camera": { "position": { "x": 50, "y": 47, "z": 80 } },
-		"vocal": "4.abstractions",
+		"vocal": "4.abstraction",
 		"colorAmount": { "r": 1, "g": 1, "b": 1 }
 	},
 	{
 		"camera": { "position": { "x": 0, "y": 47, "z": -226 } },
-		"vocal": "1.abstractions",
+		"vocal": "5.volume",
+		"colorAmount": { "r": 1, "g": 1, "b": 1 }
+	},
+	{
+		"camera": { "position": { "x": 0, "y": 47, "z": -226 } },
+		"vocal": "6.conclusion",
 		"colorAmount": { "r": 1, "g": 1, "b": 1 }
 	}
 ]
