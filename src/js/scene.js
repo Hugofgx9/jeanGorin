@@ -4,9 +4,7 @@ import gsap from 'gsap';
 import { Interaction } from 'three.interaction';
 import CameraController from './cameraController';
 import Model from './model';
-import vertexShader from '../glsl/vShader.glsl';
-import fragmentShader from '../glsl/fShader.glsl';
-import Stats from 'stats.js';
+//import Stats from 'stats.js';
 
 export default class Scene {
 	constructor(opts = {}) {
@@ -25,9 +23,9 @@ export default class Scene {
 			alpha: true,
 		});
 
-		this.stats = new Stats();
+		//this.stats = new Stats();
 
-		this.stats.showPanel(1); // 0: fps, 1: ms, 2: mb, 3+: custom
+		//this.stats.showPanel(1); // 0: fps, 1: ms, 2: mb, 3+: custom
 		document.body.appendChild(this.stats.dom);
 
 		//document.body.appendChild ( this.renderer.domElement );
@@ -78,7 +76,6 @@ export default class Scene {
 		this.camera.rotation.set(0, 0, 0);
 		this.cameraController = new CameraController(this.camera, this);
 		this.cameraController.initPos();
-		console.log(this.camera);
 	}
 
 	centerObject(object) {
@@ -118,11 +115,11 @@ export default class Scene {
 
 		this.cameraController.cameraContainer.lookAt( 10, 40, 100 );
 
-		this.stats.begin();
+		//this.stats.begin();
 		//this.controls.update();
 
 		this.renderer.render(this.scene, this.camera);
-		this.stats.end();
+		//this.stats.end();
 	}
 
 	bindEvents() {

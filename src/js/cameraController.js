@@ -31,13 +31,6 @@ export default class CameraController {
 			x: this.baseRotation.x + x * (amount * 2),
 			y: this.baseRotation.y - y * amount,
 		});
-
-		console.log(
-			'container',
-			this.cameraContainer.position,
-			'camera',
-			this.camera.position
-		);
 	}
 
 	nextPosition() {
@@ -45,7 +38,7 @@ export default class CameraController {
 			let i = this.currentCamPos;
 			let targetPosition = events[i].camera.position;
 			let vocalKey = events[i].vocal;
-			let colorAmount = events[i].colorAmount;
+			let cubeAppear = events[i].cubeAppear;
 
 			gsap.to(this.cameraContainer.position, 2, {
 				x: targetPosition.x,
@@ -54,7 +47,7 @@ export default class CameraController {
 				ease: 'power2.easeInOut',
 				onComplete: () => {
 					this.sceneCtx.options.audio.playVocal(vocalKey);
-					this.sceneCtx.model.setColorAmount(colorAmount);
+					!!cubeAppear && this.sceneCtx.model.colorArt( cubeAppear );
 					this.currentCamPos = i + 1;
 				},
 			});
