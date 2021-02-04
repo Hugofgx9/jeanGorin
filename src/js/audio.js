@@ -1,10 +1,18 @@
 import { Howl, Howler } from 'howler';
+import gsap from 'gsap';
 import makeNode from './utils/makeNode';
 import music from '~/js/store/music';
 import voiceStore from '~/js/store/voice';
+import Emitter from './utils/emitter';
 
 export default class AudioController {
-	constructor() {}
+	constructor() {
+		this.emitter = new Emitter();
+	}
+
+	on(event, callback) {
+		this.emitter.on(event, callback);
+	}
 
 	playVocal(key) {
 		this.stopVocal();
@@ -22,10 +30,19 @@ export default class AudioController {
 				{ src: vtt, kind: 'subtitles', srclang: 'fr', default: 'default' },
 			]);
 			sound.appendChild(track);
+			sound.volume = 0;
 
-			sound.play();
+			sound.play().then(() => {
+				gsap.to(sound, 0.5, {
+					volume: 1,
+				});
+				this.currentVocal = sound;
+
+				this.currentVocal.addEventListener('ended', () => {
+					this.emitter.emit('vocalComplete');
+				});
+			});
 			//console.log(audio, 'playing');
-			this.currentVocal = sound;
 
 			//track handler
 			track.oncuechange = (event) => {

@@ -6,7 +6,7 @@ export default class CameraController {
 	constructor(camera, sceneCtx) {
 		this.sceneCtx = sceneCtx;
 		this.camera = camera;
-		this.currentCamPos = 0;
+		this.currentCamPos = 1;
 		this.baseRotation = new THREE.Vector3();
 	}
 
