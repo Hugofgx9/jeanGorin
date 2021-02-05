@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import vShader from '~/glsl/vShader_basic.glsl';
 import fShader from '~/glsl/fShader.glsl';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import model from '../model/GORIN_GLTF_COLOR_SPLIT_EXPORT.gltf';
+import model from '../model/GORIN_GLTF_SHADHOW.gltf';
 
 export default class Model {
 	constructor(scene, sceneCtx) {
@@ -42,7 +42,7 @@ export default class Model {
 				this.model.traverse(child => {
 					if (child.material && child.name != '3D') {
 						child.material = new THREE.MeshBasicMaterial({
-							color: 'rgb(90%, 90%, 90%)',
+							color: 'rgb(100%, 100%, 100%)',
 							side: THREE.DoubleSide,
 							map: child.material.map,
 						});
