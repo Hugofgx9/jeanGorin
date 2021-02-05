@@ -12,11 +12,11 @@ export default class globalController {
 	//hide first screen and start sound
 	loader() {
 		let self = this;
-		document.querySelector('.loader button').addEventListener('click', () => {
+		document.querySelector('.intro-screen .open-exp-btn').addEventListener('click', () => {
 			hideLoader(afterHide);
 
 			function afterHide() {
-				document.querySelector('.loader').remove();
+				document.querySelector('.intro-screen').remove();
 				self.scene.start();
 				document.body.style.cursor = 'none';
 				self.audio.playMusic();
@@ -25,7 +25,7 @@ export default class globalController {
 		});
 
 		function hideLoader(callback) {
-			gsap.to('.loader', 1, {
+			gsap.to('.intro-screen', 1, {
 				opacity: 0,
 				onComplete: callback,
 			});
