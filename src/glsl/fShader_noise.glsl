@@ -14,7 +14,7 @@ return fract( cos( dot(p,K1) ) * 12345.6789 );
 void main() {
   vec4 color = texture2D( tDiffuse, v_uv );
   vec2 uvRandom = v_uv;
-  uvRandom.y *= random(vec2(uvRandom.y,u_time));
+  uvRandom.y *= random(vec2(uvRandom.y,u_time * 10000.));
   color.rgb += random(uvRandom)*0.15;
 
   gl_FragColor = vec4( color );
