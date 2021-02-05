@@ -2,9 +2,7 @@ import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js';
-//import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
-//import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js';
 import vShader from '~/glsl/vShader_basic.glsl';
 import fShader from '~/glsl/fShader_noise.glsl';
 import gsap from 'gsap';
@@ -24,7 +22,7 @@ export default class Scene {
 		this.fov = (180 * (2 * Math.atan(window.innerHeight / 2 / this.perspective))) / Math.PI; //use for camera
 		this.renderer = new THREE.WebGLRenderer({
 			canvas: this.container,
-			antialias: true,
+			//antialias: true,
 			alpha: true,
 		});
 
@@ -82,29 +80,29 @@ export default class Scene {
 		let renderPass = new RenderPass(this.scene, this.camera);
 
 		//custom shader pass
-		this.noiseShader = {
+		let noiseShader = {
 			uniforms: {
 				tDiffuse: { value: null },
-				u_time: { value: 0 },
+				u_time: { t: 'f', value: 0 },
 			},
 			vertexShader: vShader,
 			fragmentShader: fShader,
 		};
 
-		let noisePass = new ShaderPass(this.noiseShader);
-		let filmEffect = new FilmPass(
-			0.10, // noise intensity
-			0.0, // scanline intensity
-			0, // scanline count
-			false // grayscale)
-		);
-		noisePass.renderToScreen = true;
-		filmEffect.renderToScreen = true;
+		this.noisePass = new ShaderPass(noiseShader);
+		this.noisePass.renderToScreen = true;
+
+		this.fxaaPass = new ShaderPass(FXAAShader);
+
+		//init fxaaPass
+		let pixelRatio = this.renderer.getPixelRatio();
+		this.fxaaPass.material.uniforms['resolution'].value.x = 1 / (window.innerWidth * pixelRatio);
+		this.fxaaPass.material.uniforms['resolution'].value.y = 1 / (window.innerHeight * pixelRatio);
 
 		// rendering our scene with different layers
 		this.composer.addPass(renderPass);
-		//this.composer.addPass(filmEffect);
-		//this.composer.addPass(noisePass);
+		this.composer.addPass(this.noisePass);
+		this.composer.addPass(this.fxaaPass);
 	}
 
 	centerObject(object) {
@@ -124,6 +122,11 @@ export default class Scene {
 	onWindowResize() {
 		this.updateCamera();
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+		//update fxaaPass
+		let pixelRatio = this.renderer.getPixelRatio();
+		this.fxaaPass.material.uniforms['resolution'].value.x = 1 / (window.innerWidth * pixelRatio);
+		this.fxaaPass.material.uniforms['resolution'].value.y = 1 / (window.innerHeight * pixelRatio);
 	}
 
 	onMouseMove(event) {
@@ -139,7 +142,7 @@ export default class Scene {
 		requestAnimationFrame(this.update.bind(this));
 
 		this.cameraController.cameraContainer.lookAt(10, 40, 100);
-		this.noiseShader.uniforms.u_time.value = this.clock.getElapsedTime();
+		this.noisePass.uniforms.u_time.value = this.clock.getElapsedTime();
 
 		//this.stats.begin();
 		//this.controls.update();

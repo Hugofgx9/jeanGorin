@@ -1,6 +1,6 @@
 [
 	{
-		"camera": { "position": { "x": 0, "y": 47, "z": -50 } },
+		"camera": { "position": { "x": -200, "y": 47, "z": 120 } },
 		"vocal": "1.introduction",
 		"cubeAppear": "",
 	},
@@ -11,12 +11,12 @@
 	},
 	{
 		"camera": { "position": { "x": 100, "y": 47, "z": -140 } },
-		"vocal": "3.couleurs",
+		"vocal": "4.abstraction",
 		"cubeAppear": "JAUNE",
 	},
 	{
 		"camera": { "position": { "x": 50, "y": 47, "z": 80 } },
-		"vocal": "4.abstraction",
+		"vocal": "3.couleurs",
 		"cubeAppear": "ROUGE",
 	},
 	{

@@ -20,7 +20,7 @@ export default class CameraController {
 			this.baseRotation.y,
 			this.baseRotation.z
 		);
-		this.cameraContainer.position.set(0, 47, -226);
+		this.cameraContainer.position.set(-200, 47, 120);
 	}
 
 	rotate(mouse) {
