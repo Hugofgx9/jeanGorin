@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
-import vShader from '~/glsl/vShader.glsl';
+import vShader from '~/glsl/vShader_basic.glsl';
 import fShader from '~/glsl/fShader.glsl';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import model from '../model/GORIN_GLTF_COLOR_SPLIT_EXPORT.gltf';

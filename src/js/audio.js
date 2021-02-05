@@ -25,40 +25,38 @@ export default class AudioController {
 
 			//create audio and subtitle element
 			let sound = new Audio(audio);
-			let track = makeNode([
-				'track',
-				{ src: vtt, kind: 'subtitles', srclang: 'fr', default: 'default' },
-			]);
+			let track = makeNode(['track', { src: vtt, kind: 'subtitles', srclang: 'fr', default: 'default' }]);
 			sound.appendChild(track);
 			sound.volume = 0;
 
-			sound.play().then(() => {
-				gsap.to(sound, 0.5, {
-					volume: 1,
-				});
-				this.currentVocal = sound;
+			//wait until all audio is loaded to play it;
+			//sound.oncanplay = () => {
+				sound.play().then(() => {
+					gsap.to(sound, 0.5, {
+						volume: 1,
+					});
+					this.currentVocal = sound;
 
-				this.currentVocal.addEventListener('ended', () => {
-					this.emitter.emit('vocalComplete');
+					this.currentVocal.addEventListener('ended', () => {
+						this.emitter.emit('vocalComplete');
+					});
 				});
-			});
-			//console.log(audio, 'playing');
+				//console.log(audio, 'playing');
 
-			//track handler
-			track.oncuechange = (event) => {
-				if (track.track.activeCues[0]) {
-					subtitleContainer.textContent = track.track.activeCues[0].text;
-				} else {
-					subtitleContainer.textContent = '';
-				}
-			};
+				//track handler
+				track.oncuechange = () => {
+					if (track.track.activeCues[0]) {
+						subtitleContainer.textContent = track.track.activeCues[0].text;
+					} else {
+						subtitleContainer.textContent = '';
+					}
+				};
+			//}; //end of oncanplaytrough;
 		}
 	}
 
 	playMusic() {
 		this.stopMusic();
-
-		let subtitleContainer = document.querySelector('.subtitle-container p');
 
 		const sound = new Howl({
 			src: [music.piano],
