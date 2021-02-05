@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import vShader from '~/glsl/vShader_basic.glsl';
 import fShader from '~/glsl/fShader.glsl';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import model from '../model/GORIN_GLTF_SHADHOW.gltf';
+import model from '../model/GORIN_GLTF_SHADOWS_V2.gltf';
 
 export default class Model {
 	constructor(scene, sceneCtx) {
@@ -63,6 +63,10 @@ export default class Model {
 						},
 					});
 				});
+				this.waveArt('ROUGE', 40, 10);
+				this.waveArt('BLEU', 15, 5);
+				this.waveArt('JAUNE', 50, 7);
+				this.waveArt('NOIR', 40, 6);
 				console.log(this.model);
 			},
 			undefined,
@@ -75,9 +79,28 @@ export default class Model {
 	colorArt(name) {
 		let elementTarget = this.art.getObjectByName(name).material.uniforms.u_colorAmount;
 
-		gsap.to(elementTarget, 3, {
+		gsap.to(elementTarget, 2, {
 			value: 1,
 			ease: 'power1.easeInOut',
 		});
+	}
+
+	waveArt(obj, value, speed) {
+		let time = value / speed;
+
+		// vitesse = distance / temps
+		// temps = distance / vitesse
+
+		if (this.art.getObjectByName(obj)) {
+			let tl = gsap.timeline({ repeat: -1 });
+			tl.to(this.art.getObjectByName(obj).position, time, {
+				z: `+= ${value}`,
+				ease: 'Power1.easeInOut',
+			});
+			tl.to(this.art.getObjectByName(obj).position, time, {
+				z: `-= ${value}`,
+				ease: 'Power1.easeInOut',
+			});
+		}
 	}
 }

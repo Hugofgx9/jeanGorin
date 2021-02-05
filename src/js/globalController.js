@@ -4,23 +4,28 @@ export default class globalController {
 	constructor(audio, scene) {
 		this.audio = audio;
 		this.scene = scene;
+		this.$cursor = {
+			play: document.querySelector('.cursor .play'),
+			continue: document.querySelector('.cursor .continue'),
+			el: document.querySelector('.cursor'),
+		};
 
 		this.loader();
-		this.nextScene();
 	}
 
 	//hide first screen and start sound
 	loader() {
 		let self = this;
-		document.querySelector('.intro-screen .open-exp-btn').addEventListener('click', () => {
+		document.addEventListener('click', () => {
 			hideLoader(afterHide);
 
 			function afterHide() {
 				document.querySelector('.intro-screen').remove();
 				self.scene.start();
-				document.body.style.cursor = 'none';
+				self.$cursor.play.style.display = 'none';
 				self.audio.playMusic();
 				self.audio.playVocal('1.introduction');
+				self.nextScene();
 			}
 		});
 
@@ -41,18 +46,17 @@ export default class globalController {
 			allowNextAnim();
 		});
 
-		let btn = document.querySelector('.scene .next-btn');
-		btn.addEventListener('click', () => btnHandle());
+		document.addEventListener('click', () => btnHandle());
 
 		function allowNextAnim() {
-			btn.style.display = 'block';
-			document.body.style.cursor = 'default';
+			//btn.style.display = 'block';
+			self.$cursor.continue.style.display = 'block';
 		}
 
 		function btnHandle() {
 			self.scene.nextSeq();
-			btn.style.display = 'none';
-			document.body.style.cursor = 'none';
+			//btn.style.display = 'none';
+			self.$cursor.continue.style.display = 'none';
 		}
 	}
 }
