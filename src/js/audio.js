@@ -30,7 +30,7 @@ export default class AudioController {
 			sound.volume = 0;
 
 			//wait until all audio is loaded to play it;
-			//sound.oncanplay = () => {
+			sound.addEventListener('loadedmetadata', () => {
 				sound.play().then(() => {
 					gsap.to(sound, 0.5, {
 						volume: 1,
@@ -51,7 +51,7 @@ export default class AudioController {
 						subtitleContainer.textContent = '';
 					}
 				};
-			//}; //end of oncanplaytrough;
+			});
 		}
 	}
 

@@ -91,7 +91,7 @@ export default class Scene {
 			fragmentShader: fShader,
 		};
 
-		let noisePass = new ShaderPass(this.NoiseShader);
+		let noisePass = new ShaderPass(this.noiseShader);
 		let filmEffect = new FilmPass(
 			0.10, // noise intensity
 			0.0, // scanline intensity
@@ -103,7 +103,7 @@ export default class Scene {
 
 		// rendering our scene with different layers
 		this.composer.addPass(renderPass);
-		this.composer.addPass(filmEffect);
+		//this.composer.addPass(filmEffect);
 		//this.composer.addPass(noisePass);
 	}
 

@@ -18,7 +18,7 @@ export default class Model {
 
 		loader.load(
 			model,
-			(gltf) => {
+			gltf => {
 				this.model = gltf.scene;
 				this.scene.add(this.model);
 
@@ -39,17 +39,17 @@ export default class Model {
 				// 	},
 				// });
 
-				this.model.traverse((child) => {
+				this.model.traverse(child => {
 					if (child.material && child.name != '3D') {
 						child.material = new THREE.MeshBasicMaterial({
-							color: 0xffffff,
+							color: 'rgb(90%, 90%, 90%)',
 							side: THREE.DoubleSide,
 							map: child.material.map,
 						});
 					}
 				});
 
-				this.art.children.forEach((a) => {
+				this.art.children.forEach(a => {
 					a.material = new THREE.ShaderMaterial({
 						uniforms: {
 							u_map: { type: 't', value: a.material.map },
@@ -66,19 +66,18 @@ export default class Model {
 				console.log(this.model);
 			},
 			undefined,
-			(error) => {
+			error => {
 				console.error(error);
 			}
 		);
 	}
 
 	colorArt(name) {
-		let elementTarget = this.art.getObjectByName(name).material.uniforms
-			.u_colorAmount;
+		let elementTarget = this.art.getObjectByName(name).material.uniforms.u_colorAmount;
 
 		gsap.to(elementTarget, 3, {
 			value: 1,
-			ease: 'power1.easeInOut'
+			ease: 'power1.easeInOut',
 		});
 	}
 }
