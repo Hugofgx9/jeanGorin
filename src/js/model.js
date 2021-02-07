@@ -3,16 +3,23 @@ import gsap from 'gsap';
 import vShader from '~/glsl/vShader_basic.glsl';
 import fShader from '~/glsl/fShader.glsl';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import composition35 from '~/img/jeanGorin.png';
+import composition35 from '~/img/jeanGorin.jpeg';
 import model from '../model/GORIN_GLTF_SHADOWS_V2.gltf';
+import Emitter from './utils/emitter';
 
 export default class Model {
 	constructor(scene, sceneCtx) {
 		this.sceneCtx = sceneCtx;
 		this.scene = scene;
+		this.emitter = new Emitter();
 
 		this.loadModel();
 	}
+
+	on(event, callback) {
+		this.emitter.on(event, callback);
+	}
+
 
 	loadModel() {
 		const loader = new GLTFLoader();
@@ -69,7 +76,11 @@ export default class Model {
 				//this.waveArt('NOIR', 4, 1);
 				console.log(this.model);
 			},
-			undefined,
+			xhr => {
+				let amount = xhr.loaded / xhr.total;
+				amount = isFinite(amount) ? amount : 0;
+				this.emitter.emit('load', amount);
+			},
 			error => {
 				console.error(error);
 			}
@@ -107,7 +118,7 @@ export default class Model {
 	closeScene() {
 		//create the tableau mesh;
 		let mesh;
-		let size = 64;
+		let size = 55;
 		let geometry = new THREE.PlaneGeometry(1, 1, 100, 100);
 
 		let tex = new THREE.TextureLoader().load(composition35, t => {
@@ -125,7 +136,7 @@ export default class Model {
 		});
 
 		mesh = new THREE.Mesh(geometry, material);
-		mesh.position.set(3, 47, 0);
+		mesh.position.set(3, 49, 0);
 
 		this.scene.add(mesh);
 

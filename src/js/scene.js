@@ -43,7 +43,7 @@ export default class Scene {
 		this.initComposer();
 		//this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 		this.model = new Model(this.scene, this);
-		this.interaction();
+		//this.interaction();
 
 		this.update();
 	}
@@ -134,7 +134,7 @@ export default class Scene {
 			x: event.clientX,
 			y: event.clientY,
 			ease: 'linear.none',
-			onUpdate: () => this.cameraController.rotate(this.mouse),
+			onUpdate: () => this.cameraController.rotate(this.mouse, 0.08),
 		});
 	}
 
