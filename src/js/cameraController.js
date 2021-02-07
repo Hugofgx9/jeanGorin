@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import events from '~/js/store/event.json';
+import Emitter from './utils/emitter';
 
 export default class CameraController {
 	constructor(camera, sceneCtx) {
@@ -9,8 +10,9 @@ export default class CameraController {
 		this.cameraContainer = new THREE.Group();
 		this.cameraContainer.add(this.camera);
 		this.sceneCtx.scene.add(this.cameraContainer);
-		this.currentCamPos = 1;
 		this.baseRotation = new THREE.Vector3();
+
+		this.emitter = new Emitter;
 	}
 
 	initPos() {
@@ -33,24 +35,21 @@ export default class CameraController {
 		});
 	}
 
-	nextPosition() {
-		if (this.currentCamPos < events.length) {
-			let i = this.currentCamPos;
-			let targetPosition = events[i].camera.position;
-			let vocalKey = events[i].vocal;
-			let cubeAppear = events[i].cubeAppear;
+	nextPosition( index) {
+		let targetPosition = events[index].camera.position;
 
-			gsap.to(this.cameraContainer.position, 2, {
-				x: targetPosition.x,
-				y: targetPosition.y,
-				z: targetPosition.z,
-				ease: 'power2.easeInOut',
-				onComplete: () => {
-					this.sceneCtx.options.audio.playVocal(vocalKey);
-					!!cubeAppear && this.sceneCtx.model.colorArt( cubeAppear );
-					this.currentCamPos = i + 1;
-				},
-			});
-		}
+		gsap.to(this.cameraContainer.position, 2, {
+			x: targetPosition.x,
+			y: targetPosition.y,
+			z: targetPosition.z,
+			ease: 'power2.InOut',
+			onComplete: () => {
+				this.emitter.emit('movementcomplete', index );
+			}
+		});
+	}
+
+	on(event, callback) {
+		this.emitter.on(event, callback);
 	}
 }

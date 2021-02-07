@@ -13,9 +13,9 @@ let cursor = document.querySelector('.cursor');
 
 document.addEventListener('mousemove', (e) => {
 
-	gsap.to(cursor, 1, {
+	gsap.to(cursor, 0.5, {
 		x: e.clientX,
 		y: e.clientY,
-		ease: 'power1.easeInOut'
+		ease: 'linear.easeInOut'
 	});
 });

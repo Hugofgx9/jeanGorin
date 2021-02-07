@@ -6,7 +6,7 @@ body {
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
-	background: #1c1c1c;
+	background-color: #e5e5e5;
 	position: relative;
 	cursor: none !important;
 }
@@ -236,6 +236,7 @@ body {
 
 .cursor{
 	position: absolute;
+	pointer-events: none;
 	color: white;
 	mix-blend-mode: exclusion;
 	z-index: 30;

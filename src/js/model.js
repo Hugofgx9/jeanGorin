@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import vShader from '~/glsl/vShader_basic.glsl';
 import fShader from '~/glsl/fShader.glsl';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import composition35 from '~/img/jeanGorin.png';
 import model from '../model/GORIN_GLTF_SHADOWS_V2.gltf';
 
 export default class Model {
@@ -43,7 +44,6 @@ export default class Model {
 					if (child.material && child.name != '3D') {
 						child.material = new THREE.MeshBasicMaterial({
 							color: 'rgb(100%, 100%, 100%)',
-							side: THREE.DoubleSide,
 							map: child.material.map,
 						});
 					}
@@ -63,10 +63,10 @@ export default class Model {
 						},
 					});
 				});
-				this.waveArt('ROUGE', 40, 10);
-				this.waveArt('BLEU', 15, 5);
-				this.waveArt('JAUNE', 50, 7);
-				this.waveArt('NOIR', 40, 6);
+				//this.waveArt('ROUGE', 4, 1);
+				//this.waveArt('BLEU', 1.5, 1);
+				//this.waveArt('JAUNE', 5, 1);
+				//this.waveArt('NOIR', 4, 1);
 				console.log(this.model);
 			},
 			undefined,
@@ -102,5 +102,64 @@ export default class Model {
 				ease: 'Power1.easeInOut',
 			});
 		}
+	}
+
+	closeScene() {
+		//create the tableau mesh;
+		let mesh;
+		let size = 64;
+		let geometry = new THREE.PlaneGeometry(1, 1, 100, 100);
+
+		let tex = new THREE.TextureLoader().load(composition35, t => {
+			tex.needsUpdate = true;
+			//set img ratio to mesh
+			mesh.scale.set(-size, (size * tex.image.height) / tex.image.width, 1.0);
+		});
+
+		let material = new THREE.MeshBasicMaterial({
+			color: 0xffffff,
+			map: tex,
+			side: THREE.DoubleSide,
+			transparent: true,
+			opacity: 0,
+		});
+
+		mesh = new THREE.Mesh(geometry, material);
+		mesh.position.set(3, 47, 0);
+
+		this.scene.add(mesh);
+
+		//anim appear
+		let tl = gsap.timeline();
+		this.model.getObjectByName('RANDOM_BOX').material.transparent = true;
+		this.model.getObjectByName('RANDOM_PLATE').material.transparent = true;
+		this.model.getObjectByName('CUBE').material.transparent = true;
+
+		tl.to(this.model.getObjectByName('RANDOM_BOX').material, 3, {
+			opacity: 0,
+			ease: 'power1.out',
+		});
+		tl.to(
+			this.model.getObjectByName('RANDOM_PLATE').material,
+			3,
+			{
+				opacity: 0,
+				ease: 'power1.out',
+			},
+			'<'
+		);
+		tl.to(
+			this.model.getObjectByName('CUBE').material,
+			3,
+			{
+				opacity: 0,
+				ease: 'power1.out',
+			},
+			'<'
+		);
+		tl.to(mesh.material, 3, {
+			opacity: 1,
+			ease: 'power1.out',
+		}, '<');
 	}
 }

@@ -10,12 +10,12 @@
 		"cubeAppear": "BLEU",
 	},
 	{
-		"camera": { "position": { "x": 100, "y": 47, "z": -140 } },
+		"camera": { "position": { "x": 50, "y": 47, "z": 80 } },
 		"vocal": "4.abstraction",
 		"cubeAppear": "JAUNE",
 	},
 	{
-		"camera": { "position": { "x": 50, "y": 47, "z": 80 } },
+		"camera": { "position": { "x": 100, "y": 47, "z": -140 } },
 		"vocal": "3.couleurs",
 		"cubeAppear": "ROUGE",
 	},
@@ -28,5 +28,6 @@
 		"camera": { "position": { "x": 0, "y": 47, "z": -226 } },
 		"vocal": "6.conclusion",
 		"cubeAppear": "",
+		"animation": "outscreen",
 	}
 ]
