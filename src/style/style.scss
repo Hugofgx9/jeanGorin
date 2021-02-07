@@ -6,8 +6,9 @@ body {
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
-	background: #1c1c1c;
+	background-color: #e5e5e5;
 	position: relative;
+	cursor: none !important;
 }
 
 .scene {
@@ -63,7 +64,7 @@ body {
 		border: 2px solid $color;
 		color: $color;
 		padding: 1em;
-		cursor: pointer;
+		//cursor: pointer;
 		z-index: 1;
 		background-color: black;
 		position: relative;
@@ -170,11 +171,11 @@ body {
 	}
 
 	.item6 {
-		overflow: hidden;
 		position: relative;
-
+		overflow: hidden;
 		grid-column: 1/11;
 		grid-row: 4/6;
+		display: grid;
 		border: solid 2px;
 		border-right: none;
 		border-left: none;
@@ -183,6 +184,10 @@ body {
 
 		&:hover {
 			animation-play-state: paused;
+		}
+
+		p {
+			margin: auto 0;
 		}
 	}
 
@@ -226,5 +231,22 @@ body {
 		left: 0;
 		height: 100%;
 		width: 10%;
+	}
+}
+
+.cursor{
+	position: absolute;
+	pointer-events: none;
+	color: white;
+	mix-blend-mode: exclusion;
+	z-index: 30;
+	top: 0;
+	left: 0;
+	font-size: 3vw;
+	.play {
+		transform: translate3d(-50%, -60%, 0);
+	}
+	.continue {
+		display: none;
 	}
 }

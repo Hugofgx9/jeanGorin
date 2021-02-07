@@ -162,8 +162,9 @@ export default class Scene {
 		}
 	}
 
-	nextSeq() {
-		this.cameraController.nextPosition();
+	nextSeq( index ) {
+		this.cameraController.nextPosition( index );
+		//this.model.closeScene();
 	}
 
 	clickHandle() {
