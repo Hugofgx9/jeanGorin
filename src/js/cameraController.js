@@ -29,11 +29,11 @@ export default class CameraController {
 
 	rotate(mouse) {
 		let amount = this.rotateAmount;
-		let y = 2 * (mouse.x / window.innerHeight) - 1;
+		let y = - 2 * (mouse.x / window.innerHeight) + 1;
 		let x = 2 * (mouse.y / window.innerWidth) - 1;
 		gsap.to(this.camera.rotation, 1, {
 			x: this.baseRotation.x + x * (amount * 2),
-			y: this.baseRotation.y - y * amount,
+			y: this.baseRotation.y + y * amount,
 		});
 	}
 

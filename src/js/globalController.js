@@ -2,6 +2,7 @@ import gsap from 'gsap';
 import events from '~/js/store/event.json';
 import Emitter from './utils/emitter';
 
+
 export default class globalController {
 	constructor(audio, scene) {
 		this.state = 0  ;
@@ -22,14 +23,19 @@ export default class globalController {
 		let globalAmount = 0;
 		let modelAmount = 0;
 		let soundAmount = 0;
+		let $progressBar = document.querySelector('.loader .progress-bar');
 
-		this.emitter.on('loadglobal', () => {
-			gsap.to('.loader .progress-bar', 2, {
-				x: `${globalAmount * 100}%`,
-				ease: 'power2.InOut',
-				onComplete: () => globalAmount === 1 && closeLoader(),
+		this.emitter.on('loadglobal', (a) => loadeHandle(a) );
+
+		function loadeHandle (progress) {
+			gsap.to($progressBar, 2, {
+				x: `${progress * 100}%`,
+				ease: 'linear.InOut',
+				onComplete: () => {
+					if(progress === 1 && $progressBar._gsap.x == '100%') closeLoader();
+				}
 			});
-		});
+		}
 
 		this.scene.model.on('load', (e) => {
 			modelAmount = e;
@@ -47,13 +53,19 @@ export default class globalController {
 		}
 
 		function closeLoader () {
-			gsap.to('.loader', 1, {
+			let tl = gsap.timeline();
+			tl.to('.loader', 1, {
 				delay: 0.5,
 				opacity: 0,
 				ease: 'power1.InOut',
 				onComplete: () => {
 					document.querySelector('.loader').remove();
 				},
+			});
+			tl.to('.cursor .play', 2, {
+				display: 'block',
+				opacity: 1,
+				ease: 'power2.InOut',
 			});
 		}
 
