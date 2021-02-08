@@ -4,7 +4,7 @@ import vShader from '~/glsl/vShader_basic.glsl';
 import fShader from '~/glsl/fShader.glsl';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import composition35 from '~/img/jeanGorin.jpeg';
-import model from '../model/GORIN_GLTF_SHADOWS_V2.gltf';
+import model from '../model/GORIN_GLTF_SHADOWS_V2.gltf.png';
 import Emitter from './utils/emitter';
 
 export default class Model {
@@ -28,6 +28,7 @@ export default class Model {
 			model,
 			gltf => {
 				this.model = gltf.scene;
+				this.model.name = '3d_scene';
 				this.scene.add(this.model);
 
 				let modelCam = this.model.getObjectByName('CAM_FLAT', true);
@@ -61,6 +62,7 @@ export default class Model {
 						uniforms: {
 							u_map: { type: 't', value: a.material.map },
 							u_colorAmount: { type: 'f', value: 0 },
+							u_alpha: { type: 'f', value: 1 },
 						},
 						vertexShader: vShader,
 						fragmentShader: fShader,
@@ -118,10 +120,10 @@ export default class Model {
 	closeScene() {
 		//create the tableau mesh;
 		let mesh;
-		let size = 55;
+		let size = 90;
 		let geometry = new THREE.PlaneGeometry(1, 1, 100, 100);
 
-		let tex = new THREE.TextureLoader().load(composition35, t => {
+		let tex = new THREE.TextureLoader().load(composition35, () => {
 			tex.needsUpdate = true;
 			//set img ratio to mesh
 			mesh.scale.set(-size, (size * tex.image.height) / tex.image.width, 1.0);
@@ -142,35 +144,94 @@ export default class Model {
 
 		//anim appear
 		let tl = gsap.timeline();
-		this.model.getObjectByName('RANDOM_BOX').material.transparent = true;
-		this.model.getObjectByName('RANDOM_PLATE').material.transparent = true;
-		this.model.getObjectByName('CUBE').material.transparent = true;
+		let random_box = this.model.getObjectByName('RANDOM_BOX');
+		let random_plate = this.model.getObjectByName('RANDOM_PLATE');
+		let cube = this.model.getObjectByName('CUBE');
+		random_box.material.transparent = true;
+		random_plate.material.transparent = true;
+		cube.material.transparent = true;
+		//random_box.material.wireframe = true;
+		//random_plate.material.wireframe = true;
+		//cube.material.wireframe = true;
 
-		tl.to(this.model.getObjectByName('RANDOM_BOX').material, 3, {
-			opacity: 0,
-			ease: 'power1.out',
+		// tl.to(cube.material, 3, {
+		// 	opacity: 0,
+		// 	ease: 'power1.InOut',
+		// 	onComplete: () => this.sceneCtx.remove( cube )
+		// });
+		// tl.to(random_plate.material, 3, {
+		// 	opacity: 0,
+		// 	ease: 'power1.InOut',
+		// 	onComplete: () => this.sceneCtx.remove( random_plate ) 
+		// }, '<1');
+		// tl.to( random_box.material, 2, {
+		// 	opacity: 0,
+		// 	ease: 'power1.InOut',
+		// 	onComplete: () => this.sceneCtx.remove( random_box )
+		// }, '<1');
+		tl.to(random_box.position, 3, {
+			z: '-= 1000',
+			ease: 'power2.In',
+			//onComplete: () => this.sceneCtx.remove( random_box )
 		});
-		tl.to(
-			this.model.getObjectByName('RANDOM_PLATE').material,
-			3,
-			{
-				opacity: 0,
-				ease: 'power1.out',
-			},
-			'<'
-		);
-		tl.to(
-			this.model.getObjectByName('CUBE').material,
-			3,
-			{
-				opacity: 0,
-				ease: 'power1.out',
-			},
-			'<'
-		);
-		tl.to(mesh.material, 3, {
-			opacity: 1,
-			ease: 'power1.out',
+		tl.to(random_plate.position, 3, {
+			y: '-= 1000',
+			ease: 'power2.In',
+			//onComplete: () => this.sceneCtx.remove( random_plate ) 
+		}, '<.5');
+		tl.to( cube.material, 2, {
+			opacity: 0,
+			ease: 'power2.In',
+			//onComplete: () => this.sceneCtx.remove( cube )
+		}, '<1');
+		// this.art.children.forEach( c => {
+		// 	let uniforms = c.material.uniforms;
+		// 	tl.to(uniforms, 3, {
+		// 		u_alpha: 0,
+		// 	}, '<');
+		// });
+		// tl.to(this.art.position, 10, {
+		// 	z: -160,
+		// 	ease: 'power2.InOut',
+		// }, '<');
+		// tl.to(this.art.getObjectByName('ROUGE').position, 2.5, {
+		// 	z: -300,
+		// 	ease: 'power2.In',
+		// }, '>3');
+		// tl.to(this.art.getObjectByName('JAUNE').position, 3, {
+		// 	z: -300,
+		// 	ease: 'power2.In',
+		// }, '>-1');
+		// tl.to(this.art.getObjectByName('BLEU').position, 2, {
+		// 	z: -300,
+		// 	ease: 'power2.In',
+		// }, '>-1');
+		// tl.to(this.art.getObjectByName('NOIR').position, 2.5, {
+		// 	z: -300,
+		// 	ease: 'power2.In',
+		// }, '>-1.5');
+		// tl.to(mesh.position, 10, {
+		// 	z: -90,
+		// 	ease: 'power2.InOut',
+		// }, '<');
+		// tl.to(mesh.position, 10, {
+		// 	z: -90,
+		// 	ease: 'power2.InOut',
+		// 	onComplete: () => console.log(this.scene)
+		// }, '<');
+		tl.to(this.art.scale, 2, {
+			z: 0.1,
+		});
+		tl.to(this.art.rotation, 2, {
+			y: Math.PI / 4,
 		}, '<');
+		tl.to(this.sceneCtx.cameraController, 2, {
+			rotateAmount: 0.01,
+			ease: 'power2.InOut',
+		}, '<10');
+		tl.to(mesh.material, 4, {
+			opacity: 1,
+			ease: 'power2.InOut',
+		}, '<3');
 	}
 }

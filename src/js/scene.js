@@ -63,6 +63,13 @@ export default class Scene {
 */
 	}
 
+	remove(obj) {
+		// this.scene.remove(obj);
+		// obj.geometry.dispose();
+		// obj.material.dispose();
+		obj.scale.z = 0;
+	}
+
 	start() {
 		this.bindEvents();
 	}
@@ -134,7 +141,7 @@ export default class Scene {
 			x: event.clientX,
 			y: event.clientY,
 			ease: 'linear.none',
-			onUpdate: () => this.cameraController.rotate(this.mouse, 0.08),
+			onUpdate: () => this.cameraController.rotate(this.mouse),
 		});
 	}
 

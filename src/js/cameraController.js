@@ -8,9 +8,11 @@ export default class CameraController {
 		this.sceneCtx = sceneCtx;
 		this.camera = camera;
 		this.cameraContainer = new THREE.Group();
+		this.cameraContainer.name = 'cameraContainer';
 		this.cameraContainer.add(this.camera);
 		this.sceneCtx.scene.add(this.cameraContainer);
 		this.baseRotation = new THREE.Vector3();
+		this.rotateAmount = 0.08;
 
 		this.emitter = new Emitter;
 	}
@@ -25,7 +27,8 @@ export default class CameraController {
 		this.cameraContainer.position.set(-200, 47, 120);
 	}
 
-	rotate(mouse, amount) {
+	rotate(mouse) {
+		let amount = this.rotateAmount;
 		let y = 2 * (mouse.x / window.innerHeight) - 1;
 		let x = 2 * (mouse.y / window.innerWidth) - 1;
 		gsap.to(this.camera.rotation, 1, {
