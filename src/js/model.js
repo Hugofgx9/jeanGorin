@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import composition35 from '~/img/jeanGorin.jpeg';
 import model from '../model/GORIN_GLTF_SHADOWS_V2.gltf.png';
 import Emitter from './utils/emitter';
+import makeNode from '~/js/utils/makeNode';
 
 export default class Model {
 	constructor(scene, sceneCtx) {
@@ -31,22 +32,9 @@ export default class Model {
 				this.model.name = '3d_scene';
 				this.scene.add(this.model);
 
-				let modelCam = this.model.getObjectByName('CAM_FLAT', true);
+				//let modelCam = this.model.getObjectByName('CAM_FLAT', true);
 
 				this.art = this.model.getObjectByName('3D', true);
-
-				// this.art.material = new THREE.ShaderMaterial({
-				// 	uniforms: {
-				// 		u_map: { type: 't', value: this.art.material.map },
-				// 		u_colorAmount: { type: 'vec3', value: {r: 0, g:0, b:0} },
-				// 	},
-				// 	vertexShader: vShader,
-				// 	fragmentShader: fShader,
-				// 	defines: {
-				// 		// tofixed(1) tronque le nombre avec 1 nombre après la virgule
-				// 		PR: window.devicePixelRatio.toFixed(1),
-				// 	},
-				// });
 
 				this.model.traverse(child => {
 					if (child.material && child.name != '3D') {
@@ -66,17 +54,19 @@ export default class Model {
 						},
 						vertexShader: vShader,
 						fragmentShader: fShader,
+						side: THREE.DoubleSide,
 						defines: {
 							// tofixed(1) tronque le nombre avec 1 nombre après la virgule
 							PR: window.devicePixelRatio.toFixed(1),
 						},
+						transparent: true,
 					});
 				});
 				//this.waveArt('ROUGE', 4, 1);
 				//this.waveArt('BLEU', 1.5, 1);
 				//this.waveArt('JAUNE', 5, 1);
 				//this.waveArt('NOIR', 4, 1);
-				console.log(this.model);
+				//console.log(this.model);
 			},
 			xhr => {
 				let amount = xhr.loaded / xhr.total;
@@ -118,6 +108,18 @@ export default class Model {
 	}
 
 	closeScene() {
+
+		let $finalHtml = makeNode(['div', { class:'final-screen' }]);
+		$finalHtml.innerHtml = `<div class="final-screen">
+					<div class='info-wrap'>
+						<p class="title">Composition 35</p>
+						<p class="artist">Jean Gorin</p>
+					</div>
+				</div>`;
+
+
+		//document.body.appendChild($finalHtml);
+
 		//create the tableau mesh;
 		let mesh;
 		let size = 90;
@@ -169,27 +171,22 @@ export default class Model {
 		// 	ease: 'power1.InOut',
 		// 	onComplete: () => this.sceneCtx.remove( random_box )
 		// }, '<1');
-		tl.to(random_box.position, 3, {
+		tl.to(random_box.position, 4, {
 			z: '-= 1000',
-			ease: 'power2.In',
+			ease: 'power3.In',
+			delay: 7,
 			//onComplete: () => this.sceneCtx.remove( random_box )
 		});
-		tl.to(random_plate.position, 3, {
+		tl.to(random_plate.position, 4, {
 			y: '-= 1000',
-			ease: 'power2.In',
+			ease: 'power3.In',
 			//onComplete: () => this.sceneCtx.remove( random_plate ) 
 		}, '<.5');
 		tl.to( cube.material, 2, {
 			opacity: 0,
-			ease: 'power2.In',
+			ease: 'power3.In',
 			//onComplete: () => this.sceneCtx.remove( cube )
 		}, '<1');
-		// this.art.children.forEach( c => {
-		// 	let uniforms = c.material.uniforms;
-		// 	tl.to(uniforms, 3, {
-		// 		u_alpha: 0,
-		// 	}, '<');
-		// });
 		// tl.to(this.art.position, 10, {
 		// 	z: -160,
 		// 	ease: 'power2.InOut',
@@ -219,19 +216,27 @@ export default class Model {
 		// 	ease: 'power2.InOut',
 		// 	onComplete: () => console.log(this.scene)
 		// }, '<');
-		tl.to(this.art.scale, 2, {
-			z: 0.1,
+		// tl.to(this.art.scale, 2, {
+		// 	z: 0.1,
+		// });
+		// tl.to(this.art.rotation, 4, {
+		// 	y: Math.PI / 4,
+		// }, '<');		
+		this.art.children.forEach( c => {
+			let uniforms = c.material.uniforms;
+			tl.to(uniforms, 0.5,{
+				u_alpha: 0,
+				ease: 'power2.InOut',
+			}, '<');
 		});
-		tl.to(this.art.rotation, 2, {
-			y: Math.PI / 4,
-		}, '<');
 		tl.to(this.sceneCtx.cameraController, 2, {
 			rotateAmount: 0.01,
 			ease: 'power2.InOut',
-		}, '<10');
-		tl.to(mesh.material, 4, {
+		}, '<');
+		tl.to(mesh.material, 3, {
 			opacity: 1,
 			ease: 'power2.InOut',
-		}, '<3');
+		}, '<5');
+
 	}
 }

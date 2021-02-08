@@ -1,6 +1,6 @@
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import gsap from 'gsap';
-import makeNode from './utils/makeNode';
+import makeNode from '~/js/utils/makeNode';
 import music from '~/js/store/music';
 import voiceStore from '~/js/store/voice';
 import Emitter from './utils/emitter';

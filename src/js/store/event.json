@@ -10,7 +10,7 @@
 		"cubeAppear": "BLEU",
 	},
 	{
-		"camera": { "position": { "x": 50, "y": 47, "z": 80 } },
+		"camera": { "position": { "x": 60, "y": 10, "z": -80 } },
 		"vocal": "4.abstraction",
 		"cubeAppear": "JAUNE",
 	},
