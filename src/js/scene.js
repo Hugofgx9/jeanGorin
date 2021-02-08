@@ -43,7 +43,7 @@ export default class Scene {
 		this.initComposer();
 		//this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 		this.model = new Model(this.scene, this);
-		this.interaction();
+		//this.interaction();
 
 		this.update();
 	}
@@ -61,6 +61,13 @@ export default class Scene {
 		this.scene.add( light1 );
 		this.scene.add( light2 );
 */
+	}
+
+	remove(obj) {
+		// this.scene.remove(obj);
+		// obj.geometry.dispose();
+		// obj.material.dispose();
+		obj.scale.z = 0;
 	}
 
 	start() {

@@ -2,6 +2,7 @@ varying vec2 v_uv;
 
 uniform sampler2D u_map;
 uniform float u_colorAmount;
+uniform float u_alpha;
 
 void main() {
 	vec4 map = texture2D(u_map, v_uv );
@@ -14,5 +15,5 @@ void main() {
 	);
 	
 
-	gl_FragColor = vec4(finalColor, 1.0);
+	gl_FragColor = vec4(finalColor, u_alpha);
 }

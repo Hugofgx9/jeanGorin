@@ -13,8 +13,6 @@ export default class AudioController {
 	}
 
 	preload() {
-		console.log('preload');
-
 		let loaded = 0;
 		let total = Object.keys(voiceStore).length;
 		for (let key in voiceStore) {
@@ -29,9 +27,21 @@ export default class AudioController {
 			sound.addEventListener('canplaythrough', () => {
 				this.voiceLoaded[key] = sound;
 				loaded += 1;
-				this.emitter.emit('loadprogress', loaded / total);
+				this.emitter.emit('loadvocal', loaded / total);
 			});
+
+
 		}
+	}
+
+	prePlayVocal(key) {
+		this.playAndStopAudio(this.voiceLoaded[key]);
+	}
+
+	playAndStopAudio(audio) {
+		audio.play();
+		audio.pause();
+		audio.currentTime = 0;
 	}
 
 	on(event, callback) {
@@ -86,7 +96,7 @@ export default class AudioController {
 		if (this.currentVocal) {
 			this.currentVocal.pause();
 			this.currentVocal.currentTime = 0;
-			this.vocal = null;
+			this.vocal = '';
 		}
 	}
 
